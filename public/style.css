@@ -925,75 +925,53 @@ select option {
     background: var(--border);
 }
 
-/* Floating Cards */
+/* ── Globe Visual ──────────────────────────── */
 .hero-visual {
     position: absolute;
-    right: 5%;
+    right: 3%;
     top: 50%;
     transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
     z-index: 1;
-}
-
-.floating-card {
-    background: var(--glass);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
-    border-radius: 14px;
-    padding: 16px 20px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    min-width: 220px;
-}
-
-.floating-card.card-1 {
-    animation: floatY 5s ease-in-out infinite;
-}
-
-.floating-card.card-2 {
-    animation: floatY 6s ease-in-out infinite 1s;
-}
-
-.floating-card.card-3 {
-    animation: floatY 4s ease-in-out infinite 2s;
-}
-
-@keyframes floatY {
-
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-8px);
-    }
-}
-
-.fc-icon {
-    font-size: 1.5rem;
-    width: 42px;
-    height: 42px;
-    border-radius: 10px;
-    background: var(--glass);
+    width: clamp(340px, 42vw, 560px);
+    height: clamp(340px, 42vw, 560px);
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
 }
 
-.fc-text strong {
+#globeWrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    cursor: grab;
+}
+
+#globeWrapper:active {
+    cursor: grabbing;
+}
+
+#globeCanvas {
+    width: 100% !important;
+    height: 100% !important;
     display: block;
-    font-size: 0.85rem;
-    font-weight: 600;
 }
 
-.fc-text span {
-    font-size: 0.78rem;
-    color: var(--text2);
+#globeTooltip {
+    position: absolute;
+    background: rgba(10, 14, 30, 0.92);
+    border: 1px solid rgba(77, 166, 255, 0.4);
+    color: #e0f0ff;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    pointer-events: none;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s;
+    z-index: 10;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 16px rgba(77, 166, 255, 0.2);
 }
 
 .score-pill {
@@ -1063,86 +1041,121 @@ select option {
 
 .features-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 20px;
+    /* On wide screens, 3 or 4 cards max. This will prevent cards from being 550px tall. */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
     margin-top: 40px;
 }
 
-.feature-card {
+/* ── Focus Cards ───────────────────────────── */
+.focus-card {
     position: relative;
+    height: 380px;
+    border-radius: 20px;
     overflow: hidden;
-    background: var(--glass);
-    border: 1px solid var(--glass-border);
-    border-radius: var(--radius);
-    padding: 28px;
     cursor: pointer;
-    transition: all 0.3s;
+    background: var(--bg2);
+    /* Focus cards transition */
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid var(--glass-border);
 }
 
-.feature-card:hover {
-    transform: translateY(-6px);
-    border-color: var(--primary);
-    box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+/* Blur & Scale Un-hovered Cards using CSS :has() */
+.features-grid:has(.focus-card:hover) .focus-card:not(:hover) {
+    filter: blur(4px);
+    transform: scale(0.96);
+    opacity: 0.6;
 }
 
-.fc-bg {
+.fc-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    position: relative;
+    transition: transform 0.6s ease;
+}
+
+.focus-card:hover .fc-img {
+    transform: scale(1.05);
+}
+
+.fc-overlay {
     position: absolute;
-    top: 0;
-    right: 0;
-    width: 120px;
-    height: 120px;
-    border-radius: 0 16px 0 100%;
-    opacity: 0.08;
+    inset: 0;
+    /* Gradient from bottom to top for text readability */
+    background: linear-gradient(0deg, rgba(5, 5, 5, 0.95) 0%, rgba(5, 5, 5, 0.7) 45%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 24px;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.4s ease;
 }
 
-.fc-bg-1 {
-    background: var(--primary);
+.focus-card:hover .fc-overlay {
+    opacity: 1;
 }
 
-.fc-bg-2 {
-    background: var(--accent);
+.fc-content {
+    display: flex;
+    flex-direction: column;
+    pointer-events: none; /* Let clicks pass through to outer card */
 }
 
-.fc-bg-3 {
-    background: var(--green);
-}
-
-.fc-bg-4 {
-    background: #0a66c2;
-}
-
-.fc-bg-5 {
-    background: var(--yellow);
-}
-
+/* Icons styling for each card */
 .feature-icon {
-    font-size: 2rem;
-    margin-bottom: 16px;
-}
-
-.feature-card h3 {
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 8px;
-    font-family: var(--font2);
-}
-
-.feature-card p {
-    font-size: 0.88rem;
-    color: var(--text2);
-    line-height: 1.7;
-    margin-bottom: 16px;
-}
-
-.feature-tag {
-    display: inline-block;
-    background: var(--glass);
-    border: 1px solid var(--border);
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
     color: var(--primary);
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 100px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px;
+    transition: all 0.4s ease;
+}
+
+.focus-card:nth-child(2) .feature-icon { color: #38bdf8; }
+.focus-card:nth-child(3) .feature-icon { color: var(--accent); }
+.focus-card:nth-child(4) .feature-icon { color: #818cf8; }
+.focus-card:nth-child(5) .feature-icon { color: #a855f7; }
+
+.focus-card:hover .feature-icon {
+    transform: translateY(-4px) scale(1.1);
+}
+
+.fc-content h3 {
+    font-family: var(--font2);
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 6px;
+    line-height: 1.2;
+}
+
+.fc-content p {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.6;
+    margin: 0;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transform: translateY(10px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.focus-card:hover .fc-content p {
+    max-height: 100px;
+    opacity: 1;
+    transform: translateY(0);
+    margin-top: 8px;
 }
 
 /* ── Quote Section ──────────────────────────── */
