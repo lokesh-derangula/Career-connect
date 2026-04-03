@@ -17,7 +17,8 @@ const state = {
 };
 
 // ── API Base ──────────────────────────────
-const API = '';  // same origin
+// Update this to your deployed Render Backend URL in production
+const API = 'http://localhost:5000';
 
 // ═══════════════════════════════════════════
 //   INIT

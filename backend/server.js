@@ -17,7 +17,7 @@ const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 // ─── Crash Guard (helps Railway show error in logs instead of silent 502) ──────
 process.on('uncaughtException', (err) => {
@@ -46,8 +46,7 @@ const apiLimiter = rateLimit({
 });
 app.use('/api/', apiLimiter);
 
-// ─── Static Files ─────────────────────────────────────────────────────────────
-app.use(express.static(path.join(__dirname, 'public')));
+// backend now runs separately from frontend
 
 // ─── Multer Setup for File Uploads ───────────────────────────────────────────
 const storage = multer.memoryStorage();
@@ -740,25 +739,15 @@ function getCoursesData() {
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
 
-// ─── Admin Panel Page ─────────────────────────────────────────────────────────
-app.get('/admin', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'admin.html'));
-});
-
-// ─── Catch-all: serve index.html ──────────────────────────────────────────────
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+// ─── Backend Endpoints End ──────────────────────────────────────────────────
 
 // ─── Start Server (with DB connection) ────────────────────────────────────────
 const startServer = async () => {
     await connectDB();
     await seedAdmin();
 
-    app.listen(PORT, '0.0.0.0', () => {
-        console.log(`✅ CareerConnect running on http://localhost:${PORT}`);
-        console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
-        console.log(`🔐 Admin panel: http://localhost:${PORT}/admin`);
+    app.listen(PORT, () => {
+        console.log(`Server running on ${PORT}`);
     });
 };
 startServer();

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
     try {
-        const uri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/careerconnect';
+        const uri = process.env.MONGODB_URI || 'mongodb+srv://dbUser:<Lokesh@1234>@cluster0.qvsdo39.mongodb.net/?appName=Cluster0';
         await mongoose.connect(uri);
         console.log('✅ MongoDB connected:', mongoose.connection.host);
     } catch (err) {
