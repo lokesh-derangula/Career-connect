@@ -33,7 +33,10 @@ process.on('unhandledRejection', (reason) => {
 app.use(helmet({
     contentSecurityPolicy: false // allow inline scripts for the frontend
 }));
-app.use(cors());
+app.use(cors({
+    origin: true, // allows dynamically matching the request origin (e.g. your vercel URL)
+    credentials: true
+}));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 

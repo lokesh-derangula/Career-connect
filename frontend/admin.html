@@ -969,7 +969,7 @@
             if (!email || !pass) { errEl.textContent = 'Please fill in all fields.'; return; }
 
             try {
-                const res = await fetch('http://localhost:5000/api/auth/admin-login', {
+                const res = await fetch('https://job-nexus-oa8e.onrender.com/api/auth/admin-login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password: pass })
@@ -988,7 +988,7 @@
 
         async function verifyAdminToken() {
             try {
-                const res = await fetch('http://localhost:5000/api/auth/me', {
+                const res = await fetch('https://job-nexus-oa8e.onrender.com/api/auth/me', {
                     headers: { 'Authorization': `Bearer ${adminToken}` }
                 });
                 if (!res.ok) throw new Error('Invalid');
@@ -1021,7 +1021,7 @@
         // ─── Load Stats ────────────────────────────────────────────
         async function loadStats() {
             try {
-                const res = await fetch('http://localhost:5000/api/admin/stats', {
+                const res = await fetch('https://job-nexus-oa8e.onrender.com/api/admin/stats', {
                     headers: { 'Authorization': `Bearer ${adminToken}` }
                 });
                 if (!res.ok) throw new Error('Failed');
@@ -1045,7 +1045,7 @@
 
             try {
                 const params = new URLSearchParams({ page, limit: 15, search, role });
-                const res = await fetch(`http://localhost:5000/api/admin/users?${params}`, {
+                const res = await fetch(`https://job-nexus-oa8e.onrender.com/api/admin/users?${params}`, {
                     headers: { 'Authorization': `Bearer ${adminToken}` }
                 });
                 if (!res.ok) throw new Error('Failed');
@@ -1121,7 +1121,7 @@
         // ─── View User Details ─────────────────────────────────────
         async function viewUser(id) {
             try {
-                const res = await fetch(`http://localhost:5000/api/admin/users/${id}`, {
+                const res = await fetch(`https://job-nexus-oa8e.onrender.com/api/admin/users/${id}`, {
                     headers: { 'Authorization': `Bearer ${adminToken}` }
                 });
                 const data = await res.json();
@@ -1184,7 +1184,7 @@
             document.getElementById('confirmBtn').className = 'btn-modal-action danger';
             document.getElementById('confirmBtn').onclick = async () => {
                 try {
-                    const res = await fetch(`http://localhost:5000/api/admin/users/${id}`, {
+                    const res = await fetch(`https://job-nexus-oa8e.onrender.com/api/admin/users/${id}`, {
                         method: 'DELETE',
                         headers: { 'Authorization': `Bearer ${adminToken}` }
                     });
@@ -1201,7 +1201,7 @@
         // ─── API Update Helper ─────────────────────────────────────
         async function apiUpdate(id, body) {
             try {
-                const res = await fetch(`http://localhost:5000/api/admin/users/${id}`, {
+                const res = await fetch(`https://job-nexus-oa8e.onrender.com/api/admin/users/${id}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
