@@ -104,7 +104,7 @@ Create a `.env` file in the project root:
 
 ```env
 PORT=3000
-MONGODB_URI=mongodb+srv://dbUser:<Lokesh@1234>@cluster0.qvsdo39.mongodb.net/?appName=Cluster0
+MONGODB_URI=mongodb+srv://dbUser:Lokesh%4012@cluster0.qvsdo39.mongodb.net/Career-connect?appName=Cluster0
 ADZUNA_APP_ID=your_adzuna_app_id
 ADZUNA_API_KEY=your_adzuna_api_key
 GEMINI_API_KEY=your_gemini_api_key
