@@ -742,6 +742,16 @@ function getCoursesData() {
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
 
+// ─── Serve Frontend Static Files ─────────────────────────────────────────────
+app.use(express.static(path.join(__dirname, '../frontend')));
+
+app.get('*', (req, res) => {
+    // Only serve index.html for non-API routes (SPA support)
+    if (!req.path.startsWith('/api')) {
+        res.sendFile(path.join(__dirname, '../frontend/index.html'));
+    }
+});
+
 // ─── Backend Endpoints End ──────────────────────────────────────────────────
 
 // ─── Start Server (with DB connection) ────────────────────────────────────────
