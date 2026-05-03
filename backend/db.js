@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
     try {
-        const uri = process.env.MONGODB_URI || 'mongodb+srv://dbUser:Lokesh%401234@cluster0.qvsdo39.mongodb.net/JobNexus?retryWrites=true&w=majority&appName=Cluster0';
+        const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/Career-connect';
         await mongoose.connect(uri);
         console.log('✅ MongoDB connected:', mongoose.connection.host);
     } catch (err) {

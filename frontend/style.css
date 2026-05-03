@@ -554,6 +554,20 @@ select option {
     overflow-y: auto;
 }
 
+/* Fix input visibility in white modals */
+.modal-box input,
+.modal-box textarea,
+.modal-box select {
+    color: var(--bg);
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--text2);
+}
+.modal-box input:focus,
+.modal-box textarea:focus,
+.modal-box select:focus {
+    background: rgba(0, 0, 0, 0.02);
+}
+
 @keyframes slideUp {
     from {
         transform: translateY(30px);

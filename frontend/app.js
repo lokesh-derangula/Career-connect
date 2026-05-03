@@ -18,7 +18,7 @@ const state = {
 
 // ── API Base ──────────────────────────────
 // Update this to your deployed Render Backend URL in production
-const API = 'https://job-nexus-oa8e.onrender.com';
+const API = 'http://localhost:3000';
 
 // ═══════════════════════════════════════════
 //   INIT
