@@ -1,0 +1,9 @@
+{
+  "name": "career-connect-root",
+  "version": "1.0.0",
+  "description": "Root package.json to deploy both frontend and backend on Railway",
+  "scripts": {
+    "start": "node backend/server.js",
+    "install": "cd backend && npm install"
+  }
+}
